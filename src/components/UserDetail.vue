@@ -10,24 +10,32 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      myName: {
-        type: String
-      },
-      resetFn: Function,
-      userAge: Number
+import { eventBus } from '../main.js';
+
+export default {
+  props: {
+    myName: {
+      type: String
     },
-    methods: {
-      switchName() {
-        return this.myName.split("").reverse().join("");
-      },
-      resetName() {
-        this.myName = 'Diogo';
-        this.$emit('nameWasReset', this.myName);
-      }
+    resetFn: Function,
+    userAge: Number
+  },
+  methods: {
+    switchName() {
+      return this.myName.split("").reverse().join("");
+    },
+    resetName() {
+      this.myName = 'Diogo';
+      this.$emit('nameWasReset', this.myName);
     }
+  },
+  created() {
+    eventBus.$on('ageWasEdited', (age) => {
+      this.userAge =  age;
+    });
+
   }
+}
 </script>
 
 <style scoped>
